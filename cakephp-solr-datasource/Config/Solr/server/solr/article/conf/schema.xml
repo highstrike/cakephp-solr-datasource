@@ -1,0 +1,77 @@
+<?xml version="1.0" ?>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+ contributor license agreements.  See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ The ASF licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<schema name="article" version="1.2">
+    <types>
+        <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldtype name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+        <fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+        <!-- -->
+        <fieldType name="text_ls" class="solr.TextField" positionIncrementGap="100">
+            <analyzer type="index">
+                <charFilter class="solr.HTMLStripCharFilterFactory"/>
+                <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-FoldToASCII.txt"/>
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
+            </analyzer>
+            <analyzer type="query">
+                <charFilter class="solr.HTMLStripCharFilterFactory"/>
+                <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-FoldToASCII.txt"/>
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
+            </analyzer>
+        </fieldType>
+
+        <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+            <analyzer type="index">
+                <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            </analyzer>
+            <analyzer type="query">
+                <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            </analyzer>
+        </fieldType>
+        <fieldType name="uuid" class="solr.UUIDField" indexed="true" />
+    </types>
+
+    <fields>
+        <!-- allow db insert -->
+        <field name="id" type="int" indexed="true" stored="true" required="true" multiValued="false"/>
+        <field name="title" type="text_general" indexed="true" termVectors="true" stored="true" termPositions="true"/>
+        <field name="body" type="text_general" indexed="true" termVectors="true" stored="true" termPositions="true"/>
+        <field name="created" type="int" indexed="true" stored="true"/>
+        <field name="modified" type="int" indexed="true" stored="true"/>
+
+        <!-- ignore db insert -->
+        <field name="_version_" type="long" indexed="true" stored="true" multiValued="false"/>
+        <field name="title_ls" type="text_ls" indexed="true" stored="true" termVectors="true" termPositions="true" termOffsets="true"/>
+        <field name="body_ls" type="text_ls" indexed="true" stored="true" termVectors="true" termPositions="true" termOffsets="true"/>
+    </fields>
+    <!-- -->
+    <copyField source="title" dest="title_ls"/>
+    <copyField source="body" dest="body_ls"/>
+    <!-- field to use to determine and enforce document uniqueness. -->
+    <uniqueKey>id</uniqueKey>
+
+    <!-- field for the QueryParser to use when an explicit fieldname is absent -->
+    <defaultSearchField>title_ls</defaultSearchField>
+
+    <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
+    <solrQueryParser defaultOperator="OR"/>
+</schema>

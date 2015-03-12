@@ -1,0 +1,14 @@
+{
+    "name": "vendor_name/package_name",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "name",
+            "email": "email@email.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "solarium/solarium":"3.3.0"
+    }
+}
