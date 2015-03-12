@@ -10,7 +10,7 @@ include(ROOT . DS . 'app/vendor/autoload.php');
  * - Contains a batch function to add multiple documents into Solarium
  *
  * @author Borg
- * @version 0.2
+ * @version 0.1
  */
 class SolrSource extends DataSource
 {
