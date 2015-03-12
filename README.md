@@ -50,12 +50,12 @@ $this->paginate = [
 $articles = $this->paginate('Solr', [], ['score']); // to make order work with score, either add it to whitelist (like i did here) or make a virtual field out of it in your Solr Model
 ```
 #### Find First ####
-How about a find first query. Get the first article based on `$articleId`:
+How about a find first query. Get the article which has id 5:
 ```php
 $moreLikeThis = $this->Solr->find('first', [
     'fields' => ['id', 'title'],
     'conditions' => [
-        'query' => "id:{$articleId}",
+        'query' => 'id:5',
         'filters' => [
             'created' => 'created:[0 TO ' . time() . ']'
         ]
