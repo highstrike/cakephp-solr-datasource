@@ -24,7 +24,7 @@ The function that does the source to type transformation is called `_metamorphos
 First, open up `Model/Datasource/SolrSource.php` and look at line 4 to fix your path for Solarium
 
 #### Find All with Pagination ####
-Let's say we want to find the titles of all articles that have the keyword `home` in title and body and we want that paginated using CakePHP's Paginator Component:
+Let's say we want to find the titles of all articles that have the keyword `home` in title and body and we want that paginated using CakePHP's Paginator Component
 ```php
 // set query
 $this->paginate = [
@@ -50,7 +50,7 @@ $this->paginate = [
 $articles = $this->paginate('Solr', [], ['score']); // to make order work with score, either add it to whitelist (like i did here) or make a virtual field out of it in your Solr Model
 ```
 #### Find First ####
-How about a find first query. Get the article which has id 5:
+How about a find first query. Get the article which has id 5
 ```php
 $moreLikeThis = $this->Solr->find('first', [
     'fields' => ['id', 'title'],
@@ -76,7 +76,7 @@ $this->Solr->save(['Solr' => [
 ]], false);
 ```
 #### Save multiple Solr documents ####
-You can also save multiple Solr documents in a batch like this:
+You can also save multiple Solr documents in a batch like this
 ```php
 $model = $this->Solr;
 $model->getDataSource()->batch($model, [
