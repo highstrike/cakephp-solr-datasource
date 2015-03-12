@@ -8,13 +8,13 @@ CakePHP DataSource for Solr implementing all CRUD methods.
 - Solarium 3.3.0
 
 ## Instalation ##
-Assuming you have at least PHP 5.4 (for the array bracket annotation)
-Assuming you already have at least CakePHP 2.5.7 running (2.5.7 is what i've tested with, might also work for previous versions)
-Assuming you have already installed Solr somewhere (tested with 5.0.0)
-Run composer (as per **composer.json** included) to install [Solarium](www.solarium-project.org)
+* Assuming you have at least PHP 5.4 (for the array bracket annotation)
+* Assuming you already have at least CakePHP 2.5.7 running (2.5.7 is what i've tested with, might also work for previous versions)
+* Assuming you have already installed Solr somewhere (tested with 5.0.0)
+* Run composer (as per **composer.json** included) to install [Solarium](www.solarium-project.org)
 
 ## Included Examples ##
-I've included in Config/Solr my own simplified schema for my article core which includes id, title, body, created and modified. I am symlinking that into my Solr instalation. After that look into Config/database.php to set your Solr configuration for SolrSource.
+I've included in **Config/Solr** my own simplified schema for my article core which includes id, title, body, created and modified. I am symlinking that into my Solr instalation. After that look into `Config/database.php` to set your Solr configuration for SolrSource.
 
 I've also included the Solr model `Model/Solr.php` where the schema must match the Solr one with a simple difference. You will notice a new key called source in there which will transform into type automatically. For example if my type is integer and my source is date the data will be transformed from `2015-03-02 17:04:15` into `1425312255` (Solr cannot handle date formats, so I've opted for timestamps)
 
