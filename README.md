@@ -11,7 +11,7 @@ CakePHP DataSource for Solr implementing all CRUD methods
 * Assuming you have at least PHP 5.4 (for the array bracket annotation)
 * Assuming you already have at least CakePHP 2.5.7 running (2.5.7 is what i've tested with, might also work for previous versions)
 * Assuming you have already installed Solr somewhere (tested with 5.0.0)
-* Run composer (as per **composer.json** included) to install [Solarium](www.solarium-project.org)
+* Run composer (as per **composer.json** included) to install [Solarium](http://www.solarium-project.org/)
 
 ## Included Examples ##
 I've included in **Config/Solr** my own simplified schema for my article core which includes id, title, body, created and modified. I am symlinking that into my Solr instalation. After that look into `Config/database.php` to set your Solr configuration for SolrSource.
