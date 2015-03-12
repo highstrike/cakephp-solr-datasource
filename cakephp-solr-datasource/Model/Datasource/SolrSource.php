@@ -76,14 +76,8 @@ class SolrSource extends DataSource
      * @see DataSource::read()
      */
     public function read(Model $model, $queryData = [], $recursive = null) {
-        // more like this?
-        if(isset($queryData['morelikethis'])) {
-            $query = $this->solr->createMoreLikeThis(['interestingTerms' => 'list']);
-            if(strlen($queryData['morelikethis']) > 0)
-                $query->setMltFields($queryData['morelikethis']);
-
-        // normal query
-        } else $query = $this->solr->createSelect();
+        // start query
+        $query = $this->solr->createSelect();
 
         // set fields
         if(isset($queryData['fields']))

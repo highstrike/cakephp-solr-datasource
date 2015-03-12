@@ -37,10 +37,7 @@ $this->paginate = [
         ],
         'params' => [
             'defType' => 'edismax',
-            'qf' => 'title_ls^8 body_ls',
-            'bf' => 'log(created)',
-            'mm' => '1',
-            'stopwords' => 'true'
+            'qf' => 'title_ls^8 body_ls'
         ]
     ],
     'order' => [
@@ -52,11 +49,10 @@ $this->paginate = [
 // paginate articles
 $articles = $this->paginate('Solr', [], ['score']); // to make order work with score, either add it to whitelist (like i did here) or make a virtual field out of it in your Solr Model
 ```
-#### Find First with More Like This ####
-How about a More Like This query. Based on current article id and looking into the body field for similarities:
+#### Find First ####
+How about a find first query. Get the first article based on `$articleId`:
 ```php
 $moreLikeThis = $this->Solr->find('first', [
-    'morelikethis' => 'body_ls',
     'fields' => ['id', 'title'],
     'conditions' => [
         'query' => "id:{$articleId}",
