@@ -131,8 +131,9 @@ class SolrSource extends DataSource
 
         // format output
         $output = [];
-        foreach($result->getData()['response']['docs'] as $doc)
-            $output[] = [$model->alias => $doc];
+        if(!is_null($result->getData()['response']))
+            foreach($result->getData()['response']['docs'] as $doc)
+                $output[] = [$model->alias => $doc];
 
         // return results
         return $queryData['fields'] === 'COUNT' ? [[['count' => $model->numFound]]] : $output;
